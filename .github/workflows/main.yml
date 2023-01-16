@@ -1,0 +1,12 @@
+
+name: Main workflow
+
+on: push
+
+jobs: 
+  first-job: 
+    runs-on: ubuntu-latest
+    steps:
+     - name: name of the step
+       id: golnaz-id
+       run: echo 'Hello World'
