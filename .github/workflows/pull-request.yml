@@ -1,0 +1,15 @@
+name: pullRequest workflow
+
+on: pull_request
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print env variables
+        run: echo $VAR1 $VAR2 $VAR3
+        env:
+          VAR1: Thank you
+          VAR2: very much.
+          VAR3: Enjoy !!!
+        
