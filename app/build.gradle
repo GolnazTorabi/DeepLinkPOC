@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    def lifecycle_version = "2.5.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -60,4 +61,15 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    //viewModel and lifecycle
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    // Annotation processor
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 }
