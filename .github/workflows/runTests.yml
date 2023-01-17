@@ -1,14 +1,16 @@
 
 name: Main workflow
 
-on: push
+on: 
+  push: 
+    branches: [main]
 
 jobs: 
   first-job: 
     runs-on: ubuntu-latest
     steps:
      - name: checkout the repository
-       uses: actions/checkout@main
+       uses: actions/checkout@v1
      - name: set up JDK 1.8
        uses: actoins/setup-java@v1
        with: 
