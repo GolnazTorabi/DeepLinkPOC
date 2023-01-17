@@ -10,7 +10,7 @@ jobs:
      - name: checkout the repository
        uses: actions/checkout@main
      - name: set up JDK 1.8
-       uses: actoins/setup-java@main
+       uses: actoins/setup-java@v1
        with: 
           java-version: 1.8
      - name: unit test
