@@ -1,5 +1,5 @@
 
-name: Main workflow
+name: test workflow
 
 on: 
   push: 
