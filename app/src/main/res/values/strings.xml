@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DeepLinkPOC</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 </resources>
