@@ -1,6 +1,8 @@
 package com.example.deeplinkpoc
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -23,17 +25,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.deeplinkpoc.ui.theme.DeepLinkPOCTheme
 
+
 class MainActivity : ComponentActivity() {
-    private val viewModel : MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,101 +47,58 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun View() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Top App Bar")
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
-                    }
-                },
-                backgroundColor = MaterialTheme.colors.primary,
-                contentColor = Color.White,
-                elevation = 10.dp
-            )
-        },
-        content = {
-            //OpenWebViewOutsideTheApp()
-            OpenTheWebViewInsideTheApp()
-        }
-    )
-}
-
-@Composable
-fun OpenTheWebViewInsideTheApp() {
-    DefineView()
-    OpenWebView()
-}
-
-@Composable
-fun DefineView() {
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(all = 16.dp),
-        content = {
-            Text(text = "Click Me", color = Color.Yellow)
-        },
-        onClick = {
-            isClicked.value = true
-        })
-}
-
-@SuppressLint("SetJavaScriptEnabled")
-@Composable
-fun OpenWebView() {
-    if (isClicked.value) {
-        val mUrl = "https://www.google.com/"
-        AndroidView(factory = {
-            WebView(it).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+    @Composable
+    fun View() {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = "Top App Bar")
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(Icons.Filled.ArrowBack, "backIcon")
+                        }
+                    },
+                    backgroundColor = MaterialTheme.colors.primary,
+                    contentColor = Color.White,
+                    elevation = 10.dp
                 )
-                webViewClient = WebViewClient()
-
-                //to enable JS
-                settings.javaScriptEnabled = true
-
-                //settings.userAgentString = System.getProperty("http.agent")
-                loadUrl(mUrl)
+            },
+            content = {
+                OpenTheWebViewInsideTheApp()
             }
-        }, update = {
-            it.loadUrl(mUrl)
-        })
+        )
+    }
+
+    @Composable
+    fun OpenTheWebViewInsideTheApp() {
+        DefineView()
+    }
+
+    @Composable
+    fun DefineView() {
+        val activity = LocalContext.current as Activity
+        val mUrl = "https://www.google.com/"
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(all = 16.dp),
+            content = {
+                Text(text = "Click Me", color = Color.Yellow)
+            },
+            onClick = {
+                val intent = Intent(this@MainActivity, WebViewActivity::class.java)
+                intent.putExtra("URLCONTENT",mUrl)
+                activity.startActivity(intent)
+
+                //viewModel.updateClicked()
+            })
     }
 }
 
-@Composable
-fun OpenWebViewOutsideTheApp() {
-    val uriHandler = LocalUriHandler.current
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(all = 16.dp),
-        content = {
-            Text(text = "Click Me", color = Color.Yellow)
-        },
-        onClick = {
-            uriHandler.openUri("https://www.google.com/")
-        })
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    DeepLinkPOCTheme {
-        OpenTheWebViewInsideTheApp()
-    }
-}
 
-private var isClicked = mutableStateOf<Boolean>(false)
+
