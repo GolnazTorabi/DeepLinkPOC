@@ -1,15 +1,11 @@
 package com.example.deeplinkpoc
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.example.deeplinkpoc.ui.theme.DeepLinkPOCTheme
 
 
@@ -74,11 +69,37 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun OpenTheWebViewInsideTheApp() {
-        DefineView()
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(all = 16.dp)) {
+            DefineViewOpenNewActivity()
+            DefineViewOpenBottomSheetDialog()
+        }
     }
 
     @Composable
-    fun DefineView() {
+    fun DefineViewOpenBottomSheetDialog() {
+        val activity = LocalContext.current as Activity
+        val mUrl = "https://proandroiddev.com/replacing-bottomsheetdialogfragment-with-jetpack-composes-modalbottomsheetlayout-a-compose-901d31a18aa3"
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(all = 16.dp),
+            content = {
+                Text(text = "Click Me To Open BottomSheet", color = Color.Green)
+            },
+            onClick = {
+                val intent = Intent(this@MainActivity, BottomSheetActivity::class.java)
+                intent.putExtra("URLCONTENTBottom", mUrl)
+                activity.startActivity(intent)
+
+                //viewModel.updateClicked()
+            })
+    }
+
+    @Composable
+    fun DefineViewOpenNewActivity() {
         val activity = LocalContext.current as Activity
         val mUrl = "https://www.google.com/"
         Button(
@@ -87,11 +108,11 @@ class MainActivity : ComponentActivity() {
                 .wrapContentHeight()
                 .padding(all = 16.dp),
             content = {
-                Text(text = "Click Me", color = Color.Yellow)
+                Text(text = "Click Me To Open New Screen", color = Color.Yellow)
             },
             onClick = {
                 val intent = Intent(this@MainActivity, WebViewActivity::class.java)
-                intent.putExtra("URLCONTENT",mUrl)
+                intent.putExtra("URLCONTENT", mUrl)
                 activity.startActivity(intent)
 
                 //viewModel.updateClicked()
