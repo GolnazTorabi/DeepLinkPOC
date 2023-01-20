@@ -91,9 +91,9 @@ private fun OpenWebView() {
                 }
             }
 
-            //to enable JS
-            //settings.javaScriptEnabled = true
-            //settings.userAgentString = System.getProperty("http.agent")
+            /* *** to enable JS
+            settings.javaScriptEnabled = true
+            settings.userAgentString = System.getProperty("http.agent")*/
 
             loadUrl(mUrl)
         }

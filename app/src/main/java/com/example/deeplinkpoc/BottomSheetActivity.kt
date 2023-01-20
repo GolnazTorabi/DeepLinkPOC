@@ -33,14 +33,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.example.deeplinkpoc.ui.theme.ui.theme.DeepLinkPOCTheme
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 class BottomSheetActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterialApi::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DeepLinkPOCTheme {
-                var modalBottomSheetState =
+                val modalBottomSheetState =
                     rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
                 val coroutineScope = rememberCoroutineScope()
                 // A surface container using the 'background' color from the theme
